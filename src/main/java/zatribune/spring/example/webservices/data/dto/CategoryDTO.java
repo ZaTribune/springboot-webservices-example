@@ -1,9 +1,11 @@
 package zatribune.spring.example.webservices.data.dto;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class CategoryDTO {
     @ApiModelProperty(required = true)
     private Long id;
@@ -11,4 +13,5 @@ public class CategoryDTO {
     private String name;
     @ApiModelProperty(value = "category's URL",required = true)
     private String url;
+
 }

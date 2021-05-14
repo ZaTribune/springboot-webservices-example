@@ -33,7 +33,7 @@ class CustomerMapperTest {
         customer.setEmail("whatever10215@gmail.com");
         customer.setGender(Gender.male);
 
-        CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
+        CustomerDTO customerDTO = customerMapper.toCustomerDTO(customer);
 
         assertEquals(customerDTO.getName(), customer.getName());
         assertEquals(customerDTO.getEmail(), customer.getEmail());

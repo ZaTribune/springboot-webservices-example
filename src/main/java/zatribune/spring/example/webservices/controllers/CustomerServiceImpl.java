@@ -1,4 +1,4 @@
-package zatribune.spring.example.webservices.services;
+package zatribune.spring.example.webservices.controllers;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -10,6 +10,7 @@ import zatribune.spring.example.webservices.data.dto.CustomerDTO;
 import zatribune.spring.example.webservices.data.entities.customers.Customer;
 import zatribune.spring.example.webservices.data.mappers.CustomerMapper;
 import zatribune.spring.example.webservices.data.repositories.CustomerRepository;
+import zatribune.spring.example.webservices.services.CustomerService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,7 +36,7 @@ public class CustomerServiceImpl implements CustomerService {
                                                 @RequestParam(required = false,defaultValue ="5") Integer limit) {
         return StreamSupport.stream(customerRepository.findUsersByName(name).spliterator(),false)
                 .limit(limit)
-                .map(CustomerMapper.INSTANCE::customerToCustomerDTO)
+                .map(CustomerMapper.INSTANCE::toCustomerDTO)
                 .collect(Collectors.toList());
     }
 
@@ -43,7 +44,7 @@ public class CustomerServiceImpl implements CustomerService {
     @ResponseStatus(HttpStatus.OK)
     public CustomerDTO getById(@PathVariable Long id) {
         return customerRepository.findById(id)
-                .map(CustomerMapper.INSTANCE::customerToCustomerDTO)
+                .map(CustomerMapper.INSTANCE::toCustomerDTO)
                 .orElseThrow(() -> new NotFoundException(id));
     }
 
@@ -53,8 +54,8 @@ POST can be used to create when you know the URL of the "factory" or manager
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CustomerDTO createCustomer(@RequestBody CustomerDTO customerDTO) {
-        Customer customer=CustomerMapper.INSTANCE.customerDTOToCustomer(customerDTO);
-        return CustomerMapper.INSTANCE.customerToCustomerDTO(customerRepository.save(customer));
+        Customer customer=CustomerMapper.INSTANCE.toCustomer(customerDTO);
+        return CustomerMapper.INSTANCE.toCustomerDTO(customerRepository.save(customer));
     }
 
     @PutMapping
@@ -64,8 +65,8 @@ POST can be used to create when you know the URL of the "factory" or manager
         // we get a request with an id and a DTO
         //if the entity passed to the save() method has an id then it's an update
         customerDTO.setId(id);
-        Customer customer=CustomerMapper.INSTANCE.customerDTOToCustomer(customerDTO);
-        return CustomerMapper.INSTANCE.customerToCustomerDTO(customerRepository.save(customer));
+        Customer customer=CustomerMapper.INSTANCE.toCustomer(customerDTO);
+        return CustomerMapper.INSTANCE.toCustomerDTO(customerRepository.save(customer));
     }
 
     @PatchMapping
@@ -74,8 +75,8 @@ POST can be used to create when you know the URL of the "factory" or manager
         // we get a request with an id and a DTO
         //if the entity passed to the save() method has an id then it's an update
         customerDTO.setId(id);
-        Customer customer=CustomerMapper.INSTANCE.customerDTOToCustomer(customerDTO);
-        return CustomerMapper.INSTANCE.customerToCustomerDTO(customerRepository.save(customer));
+        Customer customer=CustomerMapper.INSTANCE.toCustomer(customerDTO);
+        return CustomerMapper.INSTANCE.toCustomerDTO(customerRepository.save(customer));
     }
 
 

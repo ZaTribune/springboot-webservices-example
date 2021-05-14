@@ -1,12 +1,16 @@
 package zatribune.spring.example.webservices.data.entities;
 
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode(exclude = "products")
 @Entity
 public class Category {
     @Id

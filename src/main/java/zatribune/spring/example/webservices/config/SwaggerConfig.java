@@ -1,10 +1,13 @@
 package zatribune.spring.example.webservices.config;
 
 
+import com.fasterxml.classmate.TypeResolver;
+import com.google.common.collect.Sets;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.context.request.async.DeferredResult;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -16,11 +19,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.ArrayList;
 
-import static springfox.documentation.builders.PathSelectors.regex;
+import static springfox.documentation.schema.AlternateTypeRules.newRule;
 
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig{
+public class SwaggerConfig {
     /*
       Swagger is an Web Services/Interface Description Language like WSDL in SOAP
       for describing RESTful APIs expressed using JSON.
@@ -28,7 +31,8 @@ public class SwaggerConfig{
       build, document, and use RESTful web services.
       Swagger includes automated documentation, code generation, and test-case generation.
     */
-
+    @Autowired
+    TypeResolver typeResolver;
     @Bean
     public Docket api() {
         //we can control to expose certain apis
@@ -40,13 +44,14 @@ public class SwaggerConfig{
                 .pathMapping("/")
                 .apiInfo(metaData())
                 .tags(new Tag("Customers", "Company's customers.")
-                ,new Tag("Categories", "Categories of products provided by the company."),
-                        new Tag("Vendors","Vendors that offer products in the company."));
+                        , new Tag("Categories", "Categories of products provided by the company.")
+                        , new Tag("Vendors", "Vendors that offer products in the company.")
+                        , new Tag("Products", "Products that are presented in the company."));
     }
 
 
-    private ApiInfo metaData(){
-        Contact contact=new Contact("Muhammad Ali","https://www.linkedin.com/in/zatribune/","muhammadali40k@gmail.com");
+    private ApiInfo metaData() {
+        Contact contact = new Contact("Muhammad Ali", "https://www.linkedin.com/in/zatribune/", "muhammadali40k@gmail.com");
         return new ApiInfo(
                 "ZaTribune webservices",
                 "Dummy webservices for testing purposes",

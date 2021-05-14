@@ -1,14 +1,15 @@
 package zatribune.spring.example.webservices.data.dto;
 
-import lombok.Data;
-import zatribune.spring.example.webservices.data.entities.Category;
-
+import lombok.Getter;
+import lombok.Setter;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 public class ProductDTO {
     private Long id;
     private String name;
     private String url;
-    private Set<Category> categories;
+    private Set<CategoryDTO> categories;
+    private Byte[]image;
 }

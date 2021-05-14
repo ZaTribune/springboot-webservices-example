@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import zatribune.spring.example.webservices.controllers.CustomerServiceImpl;
 import zatribune.spring.example.webservices.data.entities.customers.Name;
 import zatribune.spring.example.webservices.data.dto.CustomerDTO;
 

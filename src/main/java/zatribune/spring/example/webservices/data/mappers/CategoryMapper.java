@@ -9,7 +9,7 @@ import zatribune.spring.example.webservices.data.entities.Category;
 @Mapper
 public interface CategoryMapper {
     CategoryMapper INSTANCE= Mappers.getMapper(CategoryMapper.class);
-    CategoryDTO categoryToCategoryDTO(Category category);
+    CategoryDTO toCategoryDTO(Category category);
     @Mapping(target = "products", ignore = true)
-    Category categoryDTOToCategory(CategoryDTO categoryDTO);
+    Category toCategory(CategoryDTO categoryDTO);
 }

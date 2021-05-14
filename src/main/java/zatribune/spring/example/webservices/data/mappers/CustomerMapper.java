@@ -9,6 +9,6 @@ import zatribune.spring.example.webservices.data.dto.CustomerDTO;
 @Mapper
 public interface CustomerMapper {
     CustomerMapper INSTANCE= Mappers.getMapper(CustomerMapper.class);
-    CustomerDTO customerToCustomerDTO(Customer customer);
-    Customer customerDTOToCustomer(CustomerDTO customerDTO);
+    CustomerDTO toCustomerDTO(Customer customer);
+    Customer toCustomer(CustomerDTO customerDTO);
 }

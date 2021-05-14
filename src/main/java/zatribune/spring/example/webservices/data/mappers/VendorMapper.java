@@ -9,6 +9,6 @@ import zatribune.spring.example.webservices.data.entities.Vendor;
 @Mapper
 public interface VendorMapper {
     VendorMapper INSTANCE= Mappers.getMapper(VendorMapper.class);
-    VendorDTO vendorToVendorDTO(Vendor vendor);
-    Vendor vendorDTOToVendor(VendorDTO vendorDTO);
+    VendorDTO toVendorDTO(Vendor vendor);
+    Vendor toVendor(VendorDTO vendorDTO);
 }

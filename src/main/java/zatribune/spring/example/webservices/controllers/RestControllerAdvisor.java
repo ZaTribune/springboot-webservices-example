@@ -1,4 +1,4 @@
-package zatribune.spring.example.webservices.services;
+package zatribune.spring.example.webservices.controllers;
 
 
 import org.springframework.http.HttpStatus;

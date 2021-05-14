@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "server.fileserver.location",
+      "type": "java.lang.String",
+      "description": "This is the path of files required to the server e.g images on the database and so."
+    }
+  ]
+}
