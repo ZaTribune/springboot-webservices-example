@@ -1,25 +1,21 @@
 package zatribune.spring.example.webservices.controllers;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import zatribune.spring.example.webservices.Exceptions.NotFoundException;
 import zatribune.spring.example.webservices.data.dto.ProductDTO;
 import zatribune.spring.example.webservices.data.entities.Product;
+import zatribune.spring.example.webservices.data.mappers.ImageMapper;
 import zatribune.spring.example.webservices.data.mappers.ProductMapper;
 import zatribune.spring.example.webservices.data.repositories.ProductRepository;
 import zatribune.spring.example.webservices.services.ProductService;
 
-import java.net.URI;
-import java.net.URL;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -45,6 +41,19 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new NotFoundException(id));
     }
 
+    //consumes->Content-Type header
+    //produces->Accept header
+    @ApiOperation(value = "To display a product image using its id",produces = "image/jpeg")
+    @GetMapping(value = "/image",produces =MediaType.IMAGE_JPEG_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public byte[] getImage(@RequestParam("id") Long id) {
+        String image = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException(id))
+                .getImage();
+        return ImageMapper.INSTANCE.toByteArrayUnWrapped(image);
+    }
+
+    @ApiOperation(value = "Returns a list of products.",produces ="application/json, application/xml" )
     @GetMapping("/list")
     @ResponseStatus(HttpStatus.OK)
     public List<ProductDTO> getProductsByName(@RequestParam(required = false, defaultValue = "") String name
@@ -93,19 +102,4 @@ public class ProductServiceImpl implements ProductService {
         return "Deleted!";
     }
 
-    //todo:need to display images on swagger.ui
-    @ApiOperation(value = "To display a product image using its id")
-    //consumes->Content-Type header
-    @GetMapping(value = "/image/show/{id}")
-    public Byte[] getProductImageById(@PathVariable Long id) throws JsonProcessingException {
-        ProductDTO product = repository.findByIdJoined(id)
-                .map(ProductMapper.INSTANCE::toProductDTO)
-                .orElseThrow(() -> new NotFoundException(id));
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        String json = objectMapper.writeValueAsString(product.getImage());
-        log.error("" + product.getImage().length);
-
-        return product.getImage();
-    }
 }

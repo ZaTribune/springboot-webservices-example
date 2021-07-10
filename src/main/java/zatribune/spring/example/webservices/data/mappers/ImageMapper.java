@@ -1,45 +1,20 @@
 package zatribune.spring.example.webservices.data.mappers;
 
+
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
-import zatribune.spring.example.webservices.data.dto.CategoryDTO;
-import zatribune.spring.example.webservices.data.dto.ProductDTO;
-import zatribune.spring.example.webservices.data.entities.Category;
-import zatribune.spring.example.webservices.data.entities.Product;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 
 @Mapper
-public interface ProductMapper {
+public interface ImageMapper {
 
-    ProductMapper INSTANCE = Mappers.getMapper(ProductMapper.class);
-
-    @Mapping(target = "vendors", ignore = true)
-    //qualifiedByName = "image" will link the target
-    //to the specified @Named mapping method
-    @Mapping(target = "image", ignore = true)
-    Product toProduct(ProductDTO productDTO);
-
-    @Mapping(target = "categories", qualifiedByName = "category")
-    //@Mapping(target = "image", qualifiedByName = "image")
-    ProductDTO toProductDTO(Product product);
-
-    @Named("category")
-    default CategoryDTO map(Category category) {
-        CategoryDTO categoryDTO = new CategoryDTO();
-        categoryDTO.setName(category.getName());
-        categoryDTO.setUrl(category.getUrl());
-        categoryDTO.setId(category.getId());
-        return categoryDTO;
-    }
-
+    ImageMapper INSTANCE= Mappers.getMapper(ImageMapper.class);
 
     @Named("image")
     default String map(Byte[] product) {
@@ -79,5 +54,19 @@ public interface ProductMapper {
             e.printStackTrace();
         }
         return temp;
+    }
+
+
+    default byte[] toByteArrayUnWrapped(String image){
+        byte[] result = new byte[0];
+        try {
+            BufferedImage bImage = ImageIO.read(new File(PropertiesExtractor.FILE_SERVER_PATH + image));
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ImageIO.write(bImage, "jpg", bos);
+            result= bos.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }
