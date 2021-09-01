@@ -33,7 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
     @ResponseStatus(HttpStatus.OK)
     public List<CategoryDTO> getCategoriesByName(@RequestParam(defaultValue = "",required = false) String name,
                                                  @RequestParam(defaultValue = "5",required = false) Integer limit) {
-        return StreamSupport.stream(repository.findCategoriesByNameStartingWith(name).spliterator(),false)
+        return repository.findCategoriesByNameStartingWith(name).stream()
                 .limit(limit)
                 .map(CategoryMapper.INSTANCE::toCategoryDTO)
                 .collect(Collectors.toList());

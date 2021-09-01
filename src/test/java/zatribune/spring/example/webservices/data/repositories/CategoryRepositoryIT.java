@@ -4,8 +4,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.test.context.TestPropertySource;
 import zatribune.spring.example.webservices.data.entities.Category;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -13,6 +17,7 @@ import java.util.stream.StreamSupport;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
+@TestPropertySource("classpath:application-test.properties")
 class CategoryRepositoryIT {
 
     @Autowired
@@ -42,9 +47,7 @@ class CategoryRepositoryIT {
 
     @Test
     public void findCategoriesByNameStartingWith(){
-        List<Category>anotherList=StreamSupport.stream(categoryRepository.findCategoriesByNameStartingWith("f")
-                .spliterator(),false)
-                .collect(Collectors.toList());
+        List<Category>anotherList= categoryRepository.findCategoriesByNameStartingWith("f");
         assertEquals(1,anotherList.size());
     }
 }
