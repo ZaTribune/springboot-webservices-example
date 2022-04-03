@@ -1,5 +1,5 @@
-# zatribune-spring-webservices
-An Example of a RESTful Web Service Application built with Spring Boot [In progress].
+# Spring Webservices Example
+An Example of a RESTful Web service Application built with Spring Boot [In progress].
 <p align="center">
   <img  src="src/main/resources/static/images/spring.svg" width="200" height="200"/>
 </p>
