@@ -15,4 +15,4 @@ This project is for educational purposes.
 &nbsp;&nbsp;&nbsp;&nbsp;**Maven** - Build tool & Dependency Management.  
 
 ## Authors  
-   **Muhammad Ali Arafah** - find me on : [Twitter](https://twitter.com/ZaTribune), [LinkedIn](https://www.linkedin.com/in/zatribune).  
+[![Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white&label=Muhammad%20Ali)](https://linkedin.com/in/zatribune)
